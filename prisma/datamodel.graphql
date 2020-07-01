@@ -1,0 +1,30 @@
+type User {
+  id: ID! @id
+  name: String!
+  password: String!
+  email: String! @unique
+  category: [Category!]! @relation(name:"UserToCategory" onDelete: CASCADE)
+  items: [Item!]! @relation(name:"UserToItem" onDelete: CASCADE)
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt 
+  }
+
+ type Category{
+   id: ID! @id
+   name: String! @unique
+   manager: User! @relation(name:"CategoryToUser" onDelete: SET_NULL)
+   items: [Item!]! @relation(name:"CategoryToItem" onDelete: CASCADE)
+   updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt 
+ }
+
+type Item{
+  id: ID! @id
+  name: String! @unique
+  price: Float!
+  category: Category! @relation(name:"ItemToCategory" onDelete: SET_NULL)
+  manager: User! @relation(name:"ItemToUser" onDelete: SET_NULL)
+    updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt 
+}
+

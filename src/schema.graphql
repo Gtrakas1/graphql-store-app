@@ -1,0 +1,95 @@
+# import UserOrderByInput from './generated/prisma.graphql'
+type Query{
+    users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput) : [User!]!
+    me: User!
+    categories:[Category!]!
+    items:[Item!]!
+    
+}
+
+type Mutation{
+    login(data: LoginUserInput!): AuthPayLoad!
+    createUser(data: CreateUserInput!): AuthPayLoad!
+    deleteUser: User!
+    updateUser(data: UpdateUserInput!): User!
+    createCategory(data: CreateCategoryInput!): Category!
+    updateCategory(id:ID!, data:UpdateCategoryInput): Category!
+    deleteCategory(id:ID!): Category!
+    createItem(data: CreateItemInput!): Item!
+    updateItem(id:ID!, data:UpdateItemInput!): Item!
+    deleteItem(id:ID!): Item!
+    }
+
+#type Subscription{
+#}
+
+type AuthPayLoad{
+    token: String!
+    user: User!
+}
+
+input CreateCategoryInput{
+    name: String!
+}
+
+input UpdateCategoryInput{
+    name: String!
+}
+
+input CreateItemInput{
+    name: String!
+    price: Float!
+    category: ID!
+}
+
+input UpdateItemInput{
+    name: String!
+    price: Float!
+}
+
+input CreateUserInput {
+    name: String!
+    email: String!
+    password: String!
+    
+}
+
+input UpdateUserInput{
+    name: String
+    email: String
+    password: String
+    
+}
+
+
+input LoginUserInput{
+    email: String!
+    password: String!
+}
+
+type Category{
+    id: ID!
+    name: String!
+
+}
+
+type Item{
+    id: ID!
+    name: String!
+    price: Float!
+
+}
+type User{
+    id: ID!
+    name: String!
+    email: String
+    password: String!
+    updatedAt: String!
+    createdAt: String!
+}
+enum MutationType{
+    CREATED
+    UPDATED
+    DELETED
+}
+
